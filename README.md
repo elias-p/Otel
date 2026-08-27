@@ -13,7 +13,7 @@ This project demonstrates multi‑vendor observability routing, pipeline enginee
 
 ---
 
-## 📐 Architecture
+## Architecture
 
 ```mermaid
 flowchart LR
@@ -27,11 +27,11 @@ flowchart LR
     AWSLambda --> Cribl
 
 
-🚀 How to Run
+###  How to Run
 ./installer.sh
 scripts/otel-demo.sh
 
-🎯 Skills Demonstrated
+###   Skills Demonstrated
 Multi‑vendor observability architecture
 
 Cribl pipeline engineering
@@ -46,7 +46,7 @@ Elastic + Grafana + Dynatrace integration
 
 Senior‑level SRE / Observability engineering
 
-🧪 Demo Workflow
+### Demo Workflow
 Run installer
 
 Start OTel Demo
