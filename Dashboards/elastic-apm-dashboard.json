@@ -1,0 +1,52 @@
+{
+  "title": "Elastic APM — Distributed Tracing Overview",
+  "description": "APM dashboard for OTel Demo traces, spans, latency, and service performance.",
+  "panels": [
+    {
+      "type": "apm-service-map",
+      "title": "Service Map",
+      "description": "Visual map of all services and their relationships.",
+      "datasource": "Elastic",
+      "targets": [
+        { "query": "apm_service_map" }
+      ]
+    },
+    {
+      "type": "apm-traces",
+      "title": "Recent Traces",
+      "description": "List of recent traces sorted by duration.",
+      "datasource": "Elastic",
+      "targets": [
+        { "query": "apm_traces_recent" }
+      ]
+    },
+    {
+      "type": "apm-latency",
+      "title": "Latency by Service",
+      "description": "Average latency per service.",
+      "datasource": "Elastic",
+      "targets": [
+        { "query": "apm_latency_by_service" }
+      ]
+    },
+    {
+      "type": "apm-errors",
+      "title": "Error Rate",
+      "description": "Error count and error rate per service.",
+      "datasource": "Elastic",
+      "targets": [
+        { "query": "apm_errors_by_service" }
+      ]
+    },
+    {
+      "type": "apm-throughput",
+      "title": "Service Throughput",
+      "description": "Requests per second per service.",
+      "datasource": "Elastic",
+      "targets": [
+        { "query": "apm_throughput_by_service" }
+      ]
+    }
+  ]
+}
+

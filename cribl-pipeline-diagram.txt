@@ -1,0 +1,53 @@
+# Cribl Pipeline Diagram (ASCII)
+
+                         +---------------------------+
+                         |     Incoming Telemetry    |
+                         |  (OTLP logs/metrics/traces)|
+                         +-------------+-------------+
+                                       |
+                                       v
+                         +---------------------------+
+                         |       ROUTE MATCH         |
+                         |  event.type == "otel"     |
+                         +-------------+-------------+
+                                       |
+                                       v
+        +-----------------------------------------------------------+
+        |                     PIPELINE: otel_to_multi               |
+        |-----------------------------------------------------------|
+        | 1. Parse OTLP JSON                                        |
+        | 2. Add metadata:                                          |
+        |      - cribl.received_at                                  |
+        |      - cribl.source                                       |
+        | 3. Normalize timestamps                                   |
+        | 4. Convert traceId/spanId → hex                           |
+        | 5. Flatten attributes                                     |
+        | 6. Prepare multi-sink fan-out                             |
+        +-------------+-------------+-------------+------------------+
+                      |             |             |                  
+                      v             v             v                  
+        +-------------+--+   +------+-----+   +---+------+          
+        |   Elastic     |   |   Loki     |   |   Tempo   |          
+        | logs/metrics/ |   |   logs     |   |   traces  |          
+        | traces        |   +------------+   +-----------+          
+        +---------------+                                          
+                      |                                            
+                      v                                            
+        +-------------+--+                                         
+        |   Mimir       |                                         
+        |   metrics     |                                         
+        +---------------+                                         
+                      |                                            
+                      v                                            
+        +---------------------------+                              
+        |   AWS Lambda Processor    |                              
+        |   (custom telemetry)      |                              
+        +---------------------------+                              
+                      |                                            
+                      v                                            
+        +---------------------------+                              
+        |     Dynatrace OTLP        |                              
+        |     (trace ingest)        |                              
+        +---------------------------+
+
+

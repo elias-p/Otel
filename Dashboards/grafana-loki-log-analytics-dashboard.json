@@ -1,0 +1,63 @@
+{
+  "title": "Grafana Loki — Log Analytics Dashboard",
+  "description": "Log analytics dashboard for OTel Demo using Loki. Includes log volume, error detection, and pattern search.",
+  "panels": [
+    {
+      "type": "logs",
+      "title": "All Logs",
+      "datasource": "Loki",
+      "targets": [
+        { "expr": "{job=\"otel-demo\"}" }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "Log Volume (5m)",
+      "datasource": "Loki",
+      "targets": [
+        { "expr": "count_over_time({job=\"otel-demo\"}[5m])" }
+      ]
+    },
+    {
+      "type": "logs",
+      "title": "Error Logs",
+      "datasource": "Loki",
+      "targets": [
+        { "expr": "{job=\"otel-demo\"} |= \"error\"" }
+      ]
+    },
+    {
+      "type": "logs",
+      "title": "Warning Logs",
+      "datasource": "Loki",
+      "targets": [
+        { "expr": "{job=\"otel-demo\"} |= \"warn\"" }
+      ]
+    },
+    {
+      "type": "logs",
+      "title": "Search by Keyword",
+      "datasource": "Loki",
+      "targets": [
+        { "expr": "{job=\"otel-demo\"} |= \"payment\"" }
+      ]
+    },
+    {
+      "type": "graph",
+      "title": "Error Rate Over Time",
+      "datasource": "Loki",
+      "targets": [
+        { "expr": "count_over_time({job=\"otel-demo\"} |= \"error\" [1m])" }
+      ]
+    },
+    {
+      "type": "graph",
+      "title": "Log Volume Over Time",
+      "datasource": "Loki",
+      "targets": [
+        { "expr": "count_over_time({job=\"otel-demo\"}[1m])" }
+      ]
+    }
+  ]
+}
+

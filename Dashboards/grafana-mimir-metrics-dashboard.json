@@ -1,0 +1,52 @@
+{
+  "title": "Grafana Mimir — Application & System Metrics",
+  "description": "Metrics dashboard for OTel Demo using Mimir. CPU, memory, requests, and latency.",
+  "panels": [
+    {
+      "type": "graph",
+      "title": "CPU Usage",
+      "description": "CPU usage over time.",
+      "datasource": "Mimir",
+      "targets": [
+        { "expr": "otelcol_process_cpu_seconds_total" }
+      ]
+    },
+    {
+      "type": "graph",
+      "title": "Memory Usage",
+      "description": "Resident memory usage.",
+      "datasource": "Mimir",
+      "targets": [
+        { "expr": "otelcol_process_resident_memory_bytes" }
+      ]
+    },
+    {
+      "type": "graph",
+      "title": "Request Rate",
+      "description": "Requests per second from OTel Demo.",
+      "datasource": "Mimir",
+      "targets": [
+        { "expr": "rate(http_server_requests_total[1m])" }
+      ]
+    },
+    {
+      "type": "graph",
+      "title": "Error Rate",
+      "description": "Error rate over time.",
+      "datasource": "Mimir",
+      "targets": [
+        { "expr": "rate(http_server_requests_total{status=~\"5..\"}[1m])" }
+      ]
+    },
+    {
+      "type": "graph",
+      "title": "Latency (p95)",
+      "description": "95th percentile latency.",
+      "datasource": "Mimir",
+      "targets": [
+        { "expr": "histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket[5m])) by (le))" }
+      ]
+    }
+  ]
+}
+

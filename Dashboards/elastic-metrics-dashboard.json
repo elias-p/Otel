@@ -1,0 +1,63 @@
+{
+  "title": "Elastic Metrics — System & Application Performance",
+  "description": "Metrics dashboard for OTel Demo, showing CPU, memory, throughput, and system health.",
+  "panels": [
+    {
+      "type": "metrics_timeseries",
+      "title": "CPU Usage",
+      "description": "CPU usage over time.",
+      "datasource": "Elastic",
+      "targets": [
+        { "query": "system.cpu.total.norm.pct" }
+      ]
+    },
+    {
+      "type": "metrics_timeseries",
+      "title": "Memory Usage",
+      "description": "Resident memory usage.",
+      "datasource": "Elastic",
+      "targets": [
+        { "query": "system.memory.actual.used.bytes" }
+      ]
+    },
+    {
+      "type": "metrics_timeseries",
+      "title": "Network Throughput",
+      "description": "Bytes sent and received.",
+      "datasource": "Elastic",
+      "targets": [
+        { "query": "system.network.in.bytes" },
+        { "query": "system.network.out.bytes" }
+      ]
+    },
+    {
+      "type": "metrics_timeseries",
+      "title": "Disk IO",
+      "description": "Disk read/write operations.",
+      "datasource": "Elastic",
+      "targets": [
+        { "query": "system.diskio.read.bytes" },
+        { "query": "system.diskio.write.bytes" }
+      ]
+    },
+    {
+      "type": "metrics_timeseries",
+      "title": "Application Request Rate",
+      "description": "Requests per second from OTel Demo.",
+      "datasource": "Elastic",
+      "targets": [
+        { "query": "otelcol_processor_batch_batch_send_size" }
+      ]
+    },
+    {
+      "type": "metrics_timeseries",
+      "title": "Application Latency",
+      "description": "Latency distribution for OTel Demo.",
+      "datasource": "Elastic",
+      "targets": [
+        { "query": "apm.transaction.duration.us" }
+      ]
+    }
+  ]
+}
+

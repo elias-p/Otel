@@ -1,0 +1,46 @@
+# ASCII Architecture Diagram — Multi‑Platform Observability Demo
+
+                         +----------------------+
+                         |   OpenTelemetry Demo |
+                         |  (logs/metrics/traces)|
+                         +----------+-----------+
+                                    |
+                                    | OTLP
+                                    v
+                         +----------------------+
+                         |   OTel Collector     |
+                         | (normalize + fan-out)|
+                         +----------+-----------+
+                                    |
+                                    | OTLP → Cribl
+                                    v
+        +-------------------------------------------------------+
+        |                       Cribl Stream                    |
+        |   (routes, pipelines, enrichment, multi-sink fan-out) |
+        +----------+-----------+-----------+-----------+---------+
+                   |           |           |           |         
+                   |           |           |           |         
+                   v           v           v           v         
+        +----------+--+   +----+-----+  +--+------+  +--+--------+
+        |  Elastic   |   |  Loki    |  | Tempo   |  |  Mimir     |
+        | (logs/     |   | (logs)   |  | (traces)|  | (metrics)  |
+        | metrics/   |   +----------+  +---------+  +------------+
+        | traces)    |
+        +------------+
+                   |
+                   |
+                   v
+        +----------------------+
+        | AWS Lambda Processor |
+        | (custom telemetry)   |
+        +----------------------+
+
+                   |
+                   |
+                   v
+        +----------------------+
+        |     Dynatrace OTLP   |
+        | (trace ingest only)  |
+        +----------------------+
+
+

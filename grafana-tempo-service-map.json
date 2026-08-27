@@ -1,0 +1,51 @@
+{
+  "title": "Grafana Tempo — Service Map",
+  "description": "Distributed tracing service map for OTel Demo using Tempo.",
+  "panels": [
+    {
+      "type": "traces",
+      "title": "Service Map",
+      "datasource": "Tempo",
+      "targets": [
+        {
+          "query": "service-map",
+          "description": "Automatically generated service dependency graph."
+        }
+      ]
+    },
+    {
+      "type": "traces",
+      "title": "Top Slow Traces",
+      "datasource": "Tempo",
+      "targets": [
+        {
+          "query": "traceql: { span.duration > 500ms }",
+          "description": "Find slow traces using TraceQL."
+        }
+      ]
+    },
+    {
+      "type": "traces",
+      "title": "Errors in Traces",
+      "datasource": "Tempo",
+      "targets": [
+        {
+          "query": "traceql: { span.status = \"error\" }",
+          "description": "Locate traces containing errors."
+        }
+      ]
+    },
+    {
+      "type": "traces",
+      "title": "Recent Traces",
+      "datasource": "Tempo",
+      "targets": [
+        {
+          "query": "",
+          "description": "List of recent traces."
+        }
+      ]
+    }
+  ]
+}
+

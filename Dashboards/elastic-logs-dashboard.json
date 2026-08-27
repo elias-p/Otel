@@ -1,0 +1,70 @@
+{
+  "title": "Elastic Logs — Application & System Log Analytics",
+  "description": "Log analytics dashboard for OTel Demo using Elastic. Focus on errors, warnings, and log volume.",
+  "panels": [
+    {
+      "type": "logs",
+      "title": "All Logs",
+      "description": "All logs from OTel Demo.",
+      "datasource": "Elastic",
+      "targets": [
+        { "query": "logs-otel-demo-*" }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "Log Volume (5m)",
+      "description": "Total logs in the last 5 minutes.",
+      "datasource": "Elastic",
+      "targets": [
+        { "query": "logs-otel-demo-* | stats count() by @timestamp" }
+      ]
+    },
+    {
+      "type": "logs",
+      "title": "Error Logs",
+      "description": "Logs containing errors.",
+      "datasource": "Elastic",
+      "targets": [
+        { "query": "logs-otel-demo-* | where message : \"error\"" }
+      ]
+    },
+    {
+      "type": "logs",
+      "title": "Warning Logs",
+      "description": "Logs containing warnings.",
+      "datasource": "Elastic",
+      "targets": [
+        { "query": "logs-otel-demo-* | where message : \"warn\"" }
+      ]
+    },
+    {
+      "type": "logs",
+      "title": "Search by Keyword",
+      "description": "Example: search for 'payment'.",
+      "datasource": "Elastic",
+      "targets": [
+        { "query": "logs-otel-demo-* | where message : \"payment\"" }
+      ]
+    },
+    {
+      "type": "metrics_timeseries",
+      "title": "Error Rate Over Time",
+      "description": "Error log count over time.",
+      "datasource": "Elastic",
+      "targets": [
+        { "query": "logs-otel-demo-* | where message : \"error\" | stats count() by @timestamp" }
+      ]
+    },
+    {
+      "type": "metrics_timeseries",
+      "title": "Log Volume Over Time",
+      "description": "Total log volume over time.",
+      "datasource": "Elastic",
+      "targets": [
+        { "query": "logs-otel-demo-* | stats count() by @timestamp" }
+      ]
+    }
+  ]
+}
+
