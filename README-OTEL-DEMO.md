@@ -6,4 +6,3 @@ Integrates OTel Demo with:
 - Elastic Observability
 - AWS Lambda
 - Dynatrace OTLP (external only)
-
