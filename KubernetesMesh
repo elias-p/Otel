@@ -1,0 +1,15 @@
+mode: daemonset
+config:
+  receivers:
+    otlp:
+      protocols:
+        grpc:
+        http:
+  exporters:
+    otlp:
+      endpoint: gw-otel.internal:4317
+  service:
+    pipelines:
+      traces:
+        receivers: [otlp]
+        exporters: [otlp]
