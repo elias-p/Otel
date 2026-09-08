@@ -1,0 +1,22 @@
+##Deploy OTel agent (VM/EC2)
+---
+- name: Deploy OTel Agent
+  hosts: otel_agents
+  become: yes
+
+  roles:
+    - otel_agent
+
+#Deploy OTel gateway
+---
+- name: Deploy OTel Gateway
+  hosts: otel_gateways
+  become: yes
+
+  roles:
+    - otel_gateway
+
+
+
+
+
