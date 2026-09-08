@@ -1,0 +1,46 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+      http:
+
+processors:
+  batch:
+  tail_sampling:
+    policies:
+      - name: errors
+        type: status_code
+        status_code:
+          status_codes: [ERROR]
+      - name: slow_traces
+        type: latency
+        latency:
+          threshold_ms: 500
+
+exporters:
+  otlphttp/dynatrace:
+    endpoint: https://dynatrace-gov.example.com/api/v2/otlp
+    headers:
+      Authorization: Api-Token ${DYNATRACE_TOKEN}
+
+  otlphttp/splunk:
+    endpoint: https://splunk-gov.example.com:8088/services/collector
+    headers:
+      Authorization: Splunk ${SPLUNK_HEC}
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch, tail_sampling]
+      exporters: [otlphttp/dynatrace, otlphttp/splunk]
+
+    metrics:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [otlphttp/dynatrace]
+
+    logs:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [otlphttp/splunk]
