@@ -1,0 +1,39 @@
+##  Collect local metrics/logs/traces and forward to gateway.
+
+receivers:
+  otlp:
+    protocols:
+      grpc:
+      http:
+
+processors:
+  batch:
+  resource:
+    attributes:
+      - key: service.namespace
+        action: insert
+        value: payments
+      - key: aws.region
+        action: insert
+        value: us-gov-west-1
+
+exporters:
+  otlp:
+    endpoint: gw-otel.internal:4317
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch, resource]
+      exporters: [otlp]
+
+    metrics:
+      receivers: [otlp]
+      processors: [batch, resource]
+      exporters: [otlp]
+
+    logs:
+      receivers: [otlp]
+      processors: [batch, resource]
+      exporters: [otlp]
